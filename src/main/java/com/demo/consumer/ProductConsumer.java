@@ -10,6 +10,8 @@ import java.util.Map;
 import com.demo.entity.Product;
 import com.demo.inter.ProductService;
 
+
+
 public class ProductConsumer {
 
 	private ProductService productSvc;
