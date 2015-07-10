@@ -15,31 +15,14 @@
 	<!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
 	<dubbo:application name="${dubbo.application.name}" />
 
-	<dubbo:monitor protocol="registry" />
-	
 	<!-- 使用本地伪集群注册中心暴露发现服务地址 -->
 	<dubbo:registry protocol="${dubbo.monitor.protocol}"
 		address="${dubbo.registry.address}" />
-	<!-- 生成远程服务代理，可以和本地bean一样使用demoService -->
 
 
-	<!-- 地区接口 -->
-	<!-- <dubbo:reference id="addressService" interface="com.ysc.bdp.address.service.outward.IAddressService"> 
-		<dubbo:method name="getAllProvinceList" cache="lru" /> </dubbo:reference> -->
-
-	<!-- <bean class="com.bdp.BdpConsumer" id="bdpConsumer" init-method="start"> 
-		<property name="addressService" ref="addressService" /> </bean> -->
-
-
-	<!-- lazy="true" 延迟连接，当服务发起调用才创建长连接，只对dubbo协议生效 -->
-	<!-- check="false" 关闭检查provider是否开启，在测试时，有些服务不关心，或者出现了循环依赖，必须有一方先启动会用到 -->
-	<dubbo:reference id="prodSvc" lazy="true" group="cn"
-		check="false" version="1.0.6" interface="com.demo.inter.ProductService">
+	<!--在服务端提供端设置：token="true" 随机token令牌，使用UUID生成 -->
+	<!--token="123456" 固定token令牌 -->
+	<dubbo:reference id="baseService" interface="com.demo.inter.BaseService">
 	</dubbo:reference>
 
-
-	<!-- 修改init-method进行不同测试 -->
-	<bean class="com.demo.consumer.ProductConsumer" init-method="remoting">
-		<property name="productSvc" ref="prodSvc" />
-	</bean>
 </beans>
